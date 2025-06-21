@@ -1,0 +1,129 @@
+{
+  "logo": {
+    "part1_title": "طبي",
+    "part2_title": "بك",
+    "tagline": "صحتك.. أولويتنا",
+    "description": "منصة رائدة تربط المرضى بأفضل الأطباء والمتخصصين الصحيين في مصر والوطن العربي. نقدم حلاً شاملاً للرعاية الصحية يسهل الوصول إلى الاستشارات الطبية، حجز المواعيد، والمتابعة المستمرة مع نخبة من الأطباء المعتمدين."
+  },
+  "navbar": {
+    "home": "الصفحة الرئيسية",
+    "about": "من نحن",
+    "doctors": "جميع الأطباء",
+    "contact": "اتصل بنا",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "login_form": {
+    "login_description": "يرجى إدخال بريدك الإلكتروني وكلمة المرور لتسجيل الدخول",
+    "email_label": "البريد الإلكتروني",
+    "password_label": "كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+    "login_button": "تسجيل الدخول",
+    "email_placeholder": "أدخل بريدك الإلكتروني",
+    "cancel_button": "إلغاء",
+
+    "login_doctor": {
+      "title": "تسجيل دخول الطبيب",
+      "description": "يرجى إدخال بريدك الإلكتروني وكلمة المرور لتسجيل الدخول كطبيب",
+      "email_placeholder": "أدخل بريدك الإلكتروني",
+      "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+      "login_button": "تسجيل الدخول",
+      "cancel_button": "إلغاء",
+      "forgot_password": "نسيت كلمة المرور؟",
+      "register_as_doctor": "سجل كطبيب",
+      "don't_have_account": "ليس لديك حساب؟"
+    }
+  },
+  "register_form": {
+    "register_description": "يرجى ملء النموذج أدناه لإنشاء حساب جديد",
+    "name_label": "الاسم الكامل",
+    "email_label": "البريد الإلكتروني",
+    "password_label": "كلمة المرور",
+    "confirm_password_label": "تأكيد كلمة المرور",
+    "name_placeholder": "أدخل اسمك الكامل",
+    "email_placeholder": "أدخل بريدك الإلكتروني",
+    "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+    "phone_placeholder": "أدخل رقم هاتفك",
+    "age_placeholder": "أدخل عمرك",
+    "gender_placeholder": "اختر الجنس",
+    "gender_male": "ذكر",
+    "gender_female": "انثى",
+    "gender_other": "اخرى",
+    "confirm_password_placeholder": "أعد إدخال كلمة المرور الخاصة بك",
+    "register_button": "إنشاء حساب",
+    "cancel_button": "إلغاء",
+
+    "doctor_register": {
+      "title": "تسجيل الطبيب",
+      "description": "يرجى ملء النموذج أدناه للتسجيل كطبيب",
+      "name_placeholder": "أدخل اسمك الكامل",
+      "email_placeholder": "أدخل بريدك الإلكتروني",
+      "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+      "confirm_password_placeholder": "أعد إدخال كلمة المرور الخاصة بك",
+      "phone_placeholder": "أدخل رقم هاتفك",
+      "specialty_placeholder": "اختر التخصص الطبي",
+      "age_placeholder": "أدخل عمرك",
+      "clinic_placeholder": "اختر العيادة",
+      "experience_placeholder": "ادخل سنوات الخبرة",
+      "government_placeholder": "اختر الحكومة",
+      "address_placeholder": "ادخل عنوانك",
+      "bio_placeholder": "اكتب بيو",
+      "already_have_account": "لديك حساب؟",
+      "login_as_doctor": "تسجيل الدخول كطبيب",
+      "register_button": "تسجيل كطبيب",
+      "cancel_button": "إلغاء"
+    },
+
+    "reset_form": {
+      "title": "استعادة كلمة المرور",
+      "description": "يرجى ملء النموذج ادناه لاستعادة كلمة المرور",
+      "email_placeholder": "ادخل بريدك الالكتروني",
+      "get_code": "احصل علي كود التحقق",
+
+      "reset_title": "تاكيد استعادة كلمة المرور",
+      "reset_description": "يرجى ملء النموذج ادناه لاستعادة كلمة المرور وكلمة المرور الجديدة",
+      "reset_password_button": "استعادة كلمة المرور",
+      "otp_placeholder": "ادخل كود التحقق",
+      "new_password_placeholder": "ادخل كلمة المرور الجديدة"
+    }
+  },
+
+  "footer": {
+    "about": {
+      "description": "منصة طبيبك تمكنك من حجز المواعيد الطبية بسهولة مع أفضل الأطباء والمتخصصين في جمهورية مصر العربية.",
+      "tagline": "رعاية طبية متميزة بين يديك"
+    },
+    "services": {
+      "title": "خدماتنا",
+      "links": {
+        "book_appointment": "حجز موعد طبي",
+        "find_doctors": "البحث عن أطباء",
+        "specialties": "التخصصات الطبية",
+        "clinics": "المستشفيات والمراكز الطبية"
+      }
+    },
+    "contact": {
+      "title": "تواصل معنا",
+      "address": "القاهرة، جمهورية مصر العربية",
+      "email": "البريد الإلكتروني: info@tabeebak.com.eg",
+      "phone": "الخط الساخن: 16328",
+      "emergency": "للطوارئ: 123"
+    },
+    "social": {
+      "title": "تابعنا",
+      "emergency_section": {
+        "title": "الطوارئ الطبية:",
+        "number": "123"
+      }
+    },
+    "copyright": {
+      "main": "منصة طبيبك. جميع الحقوق محفوظة.",
+      "subtext": "نظام حجز المواعيد الطبية الأول في مصر"
+    }
+  },
+
+  "all_doctors": {
+    "title": "ابحث عن أفضل الأطباء",
+    "subtitle": "ابحث عن الأطباء حسب التخصص، الموقع، والمزيد"
+  }
+}
