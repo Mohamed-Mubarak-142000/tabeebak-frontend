@@ -7,7 +7,7 @@ import axios, {
 
 const createApiClient = (role: "doctor" | "patient"): AxiosInstance => {
   const instance = axios.create({
-    baseURL: "https://tabeebak-backend-swsx.vercel.app/api",
+    baseURL: "https://tabeebak-backend.vercel.app/api",
     withCredentials: true,
     headers: {
       "Content-Type": "application/json",
