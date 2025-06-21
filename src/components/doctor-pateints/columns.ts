@@ -15,21 +15,21 @@ const columns: Column<PatientColumn>[] = [
   {
     id: "name",
     label: tFn("overview:patient_page.columns.name"),
-    format(value, row) {
+    format(row) {
       return row?.name;
     },
   },
   {
     id: "email",
     label: tFn("overview:patient_page.columns.email"),
-    format(value, row) {
+    format(row) {
       return row?.email;
     },
   },
   {
     id: "phone",
     label: tFn("overview:patient_page.columns.phone"),
-    format(value, row) {
+    format(row) {
       return row?.phone;
     },
   },
@@ -37,7 +37,7 @@ const columns: Column<PatientColumn>[] = [
   {
     id: "createdAt",
     label: tFn("overview:patient_page.columns.createdAt"),
-    format(value, row) {
+    format(row) {
       return formatDateTimeByLang(row?.createdAt);
     },
   },

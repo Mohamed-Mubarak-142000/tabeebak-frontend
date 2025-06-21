@@ -43,7 +43,7 @@ export const columns: Column<AppointmentRaw>[] = [
     id: "status",
     label: tFn("overview:appointments_page.columns.status"),
     align: "center",
-    format: (value: string, row?: AppointmentRaw) => {
+    format: (_value: string, row?: AppointmentRaw) => {
       if (!row) return null;
       return <ChangeStatusAppointment row={row} />;
     },
