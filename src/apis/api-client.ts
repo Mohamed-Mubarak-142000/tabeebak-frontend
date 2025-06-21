@@ -10,7 +10,7 @@ const createApiClient = (role: "doctor" | "patient"): AxiosInstance => {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Access-Control-Allow-Origin": "https://tabeebak-frontend.vercel.app", // إضافة يدوية للاختبار
+      "X-Requested-With": "XMLHttpRequest",
     },
   });
 
@@ -21,6 +21,18 @@ const createApiClient = (role: "doctor" | "patient"): AxiosInstance => {
     }
     return config;
   });
+
+  // Add response interceptor to handle errors
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        // Handle unauthorized access
+        console.error("Unauthorized access - please login again");
+      }
+      return Promise.reject(error);
+    }
+  );
 
   return instance;
 };
