@@ -10,6 +10,7 @@ const createApiClient = (role: "doctor" | "patient"): AxiosInstance => {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      "Access-Control-Allow-Origin": "https://tabeebak-frontend.vercel.app", // إضافة يدوية للاختبار
     },
   });
 
