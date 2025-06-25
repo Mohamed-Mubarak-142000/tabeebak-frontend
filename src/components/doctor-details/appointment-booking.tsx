@@ -14,13 +14,11 @@ import {
 import { toast } from "react-toastify";
 import { useCreateAppointment } from "../../apis/use-case/patient/appointments";
 import { usePatientAuth } from "../../context/auth-context";
-import type {
-  AvailableSlot,
-  AvailableSlotsData,
-} from "../../apis/use-case/types";
+import type { AvailableSlot } from "../../apis/use-case/types";
 import { useEffect, useState } from "react";
 import { GetAvailableSlotsSelector } from "./select-available-slots";
 import { tFn, useTranslate } from "../../locales";
+import { useGetAvailableSlotsForPatient } from "../../apis/use-case/doctor/get-available-slots";
 
 // Create schema with translated error messages
 const createAppointmentSchema = z.object({
@@ -51,17 +49,16 @@ const createAppointmentSchema = z.object({
 
 type AppointmentFormValues = z.infer<typeof createAppointmentSchema>;
 
-const AppointmentBooking = ({
-  doctorId,
-  data,
-}: {
-  doctorId: string;
-  data: AvailableSlotsData;
-}) => {
+const AppointmentBooking = ({ doctorId }: { doctorId: string }) => {
   const { t } = useTranslate("appointment");
   const { mutateAsync: createAppointment, isPending } = useCreateAppointment();
   const { patient } = usePatientAuth();
   const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>([]);
+
+  const { data } = useGetAvailableSlotsForPatient({
+    id: doctorId || "",
+    showAll: false,
+  });
 
   const {
     handleSubmit,

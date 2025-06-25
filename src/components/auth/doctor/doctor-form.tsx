@@ -35,9 +35,8 @@ export const DoctorLoginForm = () => {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       sx={{
-        mt: 3,
-        padding: 3,
-        borderRadius: 2,
+        mt: { xs: 1, lg: 3 },
+        padding: { lg: 3 },
       }}
     >
       <TextField

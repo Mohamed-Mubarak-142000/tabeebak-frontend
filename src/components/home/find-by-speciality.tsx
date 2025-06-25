@@ -1,16 +1,14 @@
-import { CircularProgress, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import TitleSection from "../title-section";
 import { useTranslate } from "../../locales";
 import { useSpecialties } from "../../apis/use-case/get-all-specialiste";
 import SpecialitySlider from "./speciality-slider";
+import SpecialitySliderSkeleton from "../skeletons/speciality-item";
+import { ErrorStateContent } from "../error-state-content";
 
 const FindBySpecialty = () => {
   const { t } = useTranslate("home");
-  const { data, isPending } = useSpecialties();
-
-  if (isPending) {
-    return <CircularProgress size={24} />;
-  }
+  const { data, isPending, isError } = useSpecialties();
 
   return (
     <Stack spacing={5}>
@@ -28,14 +26,26 @@ const FindBySpecialty = () => {
           subTitle: {
             variant: "body1",
             sx: {
-              fontSize: { xs: ".5rem", md: ".75rem", lg: "1rem" },
+              textAlign: "center",
+              fontSize: { xs: ".8rem", md: "1rem", lg: "1.2rem" },
               fontWeight: (theme) => theme.typography.fontWeightRegular,
             },
           },
         }}
       />
+      {isError && (
+        <ErrorStateContent
+          icon="material-symbols:error-outline-rounded"
+          title="خطأ"
+          subtitle="حدث خطأ أثناء تحميل الموقع"
+        />
+      )}
 
-      {data && <SpecialitySlider data={data.data} />}
+      {!data && isPending ? (
+        <SpecialitySliderSkeleton />
+      ) : (
+        data && <SpecialitySlider data={data && data.data} />
+      )}
     </Stack>
   );
 };

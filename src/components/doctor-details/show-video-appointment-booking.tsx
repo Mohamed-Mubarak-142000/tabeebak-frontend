@@ -1,16 +1,9 @@
 import { Box } from "@mui/material";
 import { videos } from "../../assets/videos";
 import AppointmentBooking from "./appointment-booking";
-import type { AvailableSlotsData } from "../../apis/use-case/types";
 import ShowVideo from "../show-video";
 
-const ShowVideoAndAppointmentBooking = ({
-  doctorId,
-  data,
-}: {
-  doctorId: string;
-  data: AvailableSlotsData;
-}) => {
+const ShowVideoAndAppointmentBooking = ({ doctorId }: { doctorId: string }) => {
   return (
     <Box
       sx={{
@@ -23,7 +16,7 @@ const ShowVideoAndAppointmentBooking = ({
       }}
     >
       <ShowVideo video={videos.intro} />
-      <AppointmentBooking doctorId={doctorId} data={data} />
+      <AppointmentBooking doctorId={doctorId} />
     </Box>
   );
 };

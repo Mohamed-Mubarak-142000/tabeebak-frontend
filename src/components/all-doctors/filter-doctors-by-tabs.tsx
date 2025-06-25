@@ -1,78 +1,86 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
+import { useMemo, useState } from "react";
 import CustomTabs from "../custom-tabs";
 import DoctorItem from "../home/doctor-card";
-import { useMemo, useState } from "react";
 import PaginationControlled from "../custom-pagination";
 import { EmptyStateContent } from "../empty-state-content";
 import { useGetAllDoctors } from "../../apis/use-case/doctor/get-all-doctors";
 import { useSpecialties } from "../../apis/use-case/get-all-specialiste";
 import { getCurrentLang } from "../../locales";
+import TopDoctorsSkeleton from "../skeletons/doctor-card-skeleton";
+import type { DoctorData } from "../../apis/use-case/types";
 
 const FilterDoctorsByTabs = () => {
-  const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const doctorsPerPage = 8;
 
-  // Fetch specialties from API
-  const {
-    data: specialtiesResponse,
-    isLoading: isSpecialtiesLoading,
-    error: specialtiesError,
-  } = useSpecialties();
+  const { data: specialtiesData, error: errorSpecialties } = useSpecialties();
 
-  // Add "All" option to the beginning of specialties
-  const specialtyData = useMemo(() => {
-    const specialties = specialtiesResponse?.data || [];
+  const specialties = useMemo(() => {
+    const base = specialtiesData?.data || [];
     return [
       { id: "all", value: "All", label: { en: "All", ar: "الكل" } },
-      ...specialties,
+      ...base,
     ];
-  }, [specialtiesResponse]);
+  }, [specialtiesData]);
 
-  // Get current specialty filter
-  const currentSpecialty = useMemo(() => {
-    return specialtyData[activeTabIndex]?.value || "All";
-  }, [activeTabIndex, specialtyData]);
+  const currentSpecialty = specialties[activeTabIndex]?.value || "All";
 
-  // Fetch doctors with current filter
-  const doctorQueryParams = {
-    page: currentPage,
-    limit: doctorsPerPage,
-    sort: "-rating",
-    ...(currentSpecialty !== "All" && { specialty: currentSpecialty }),
-  };
+  const queryParams = useMemo(
+    () => ({
+      page: currentPage,
+      limit: doctorsPerPage,
+      sort: "-rating",
+      ...(currentSpecialty !== "All" && { specialty: currentSpecialty }),
+    }),
+    [currentPage, doctorsPerPage, currentSpecialty]
+  );
 
   const {
     data: doctorsData,
-    isLoading: isDoctorsLoading,
-    error: doctorsError,
-  } = useGetAllDoctors(doctorQueryParams);
+    isLoading: loadingDoctors,
+    error: errorDoctors,
+  } = useGetAllDoctors(queryParams);
 
-  const handleTabChange = (newValue: number) => {
-    setActiveTabIndex(newValue);
+  const handleTabChange = (newIndex: number) => {
+    setActiveTabIndex(newIndex);
     setCurrentPage(1);
   };
 
-  if (isSpecialtiesLoading) {
-    return (
-      <Box display="flex" justifyContent="center" p={4}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const renderDoctorGrid = (doctors: DoctorData[]) => (
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)",
+        },
+        gap: 2,
+      }}
+    >
+      {loadingDoctors ? (
+        <TopDoctorsSkeleton />
+      ) : (
+        doctors.map((doctor) => <DoctorItem key={doctor._id} doctor={doctor} />)
+      )}
+    </Box>
+  );
 
-  if (specialtiesError) {
+  // Error loading specialties
+  if (errorSpecialties) {
     return (
       <EmptyStateContent
         title="Error Loading Specialties"
-        subtitle={specialtiesError.message}
+        subtitle={errorSpecialties.message}
       />
     );
   }
 
   return (
     <CustomTabs
-      tabs={specialtyData.map((spec) => ({
+      tabs={specialties.map((spec) => ({
         label: getCurrentLang() === "ar" ? spec.label.ar : spec.label.en,
         value: spec.value,
       }))}
@@ -80,21 +88,12 @@ const FilterDoctorsByTabs = () => {
       onTabChange={handleTabChange}
       tabIndex={activeTabIndex}
     >
-      {/* Doctors loading state */}
-      {isDoctorsLoading && (
-        <Box display="flex" justifyContent="center" p={4}>
-          <CircularProgress />
-        </Box>
-      )}
-
-      {doctorsError && (
+      {!loadingDoctors && errorDoctors ? (
         <EmptyStateContent
           title="Error Loading Doctors"
-          subtitle={doctorsError.message}
+          subtitle={errorDoctors.message}
         />
-      )}
-
-      {!isDoctorsLoading && !doctorsError && doctorsData?.data.length === 0 && (
+      ) : doctorsData?.data.length === 0 ? (
         <EmptyStateContent
           title="No Doctors Found"
           subtitle={`No doctors found for ${currentSpecialty} specialty`}
@@ -115,41 +114,20 @@ const FilterDoctorsByTabs = () => {
             },
           }}
         />
+      ) : (
+        <PaginationControlled
+          items={doctorsData?.data || []}
+          countPerPage={doctorsPerPage}
+          initialPage={currentPage}
+          onPageChange={(_items, page) => setCurrentPage(page)}
+          sx={{ mt: 2, mb: 2 }}
+          color="primary"
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          render={renderDoctorGrid}
+        />
       )}
-
-      {!isDoctorsLoading &&
-        !doctorsError &&
-        doctorsData &&
-        doctorsData.data.length > 0 && (
-          <PaginationControlled
-            items={doctorsData.data}
-            countPerPage={doctorsPerPage}
-            initialPage={currentPage}
-            onPageChange={(_pageItems, page) => setCurrentPage(page)}
-            sx={{ mt: 2, mb: 2 }}
-            color="primary"
-            variant="outlined"
-            shape="rounded"
-            size="large"
-            render={(doctors) => (
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "repeat(2, 1fr)",
-                    md: "repeat(3, 1fr)",
-                    lg: "repeat(4, 1fr)",
-                  },
-                  gap: 2,
-                }}
-              >
-                {doctors.map((doctor) => (
-                  <DoctorItem key={doctor._id} doctor={doctor} />
-                ))}
-              </Box>
-            )}
-          />
-        )}
     </CustomTabs>
   );
 };

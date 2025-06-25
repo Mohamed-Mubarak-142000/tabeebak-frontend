@@ -21,7 +21,7 @@ const DoctorRegister = () => {
         justifyContent: "center",
         height: "100%",
         width: "100%",
-        mb: 5,
+        my: 5,
       }}
     >
       <Box
@@ -46,7 +46,7 @@ const DoctorRegister = () => {
         <AnimatedTitle
           sx={{
             color: "primary.darker",
-            fontSize: { xs: ".5rem", md: "1rem", lg: "1.5rem" },
+            fontSize: { xs: ".8rem", md: "1rem", lg: "1.2rem" },
             fontWeight: (theme) => theme.typography.fontWeightBold,
             lineHeight: 1.2,
           }}

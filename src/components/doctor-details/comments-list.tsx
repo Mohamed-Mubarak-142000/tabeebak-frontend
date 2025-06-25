@@ -2,7 +2,6 @@ import { Delete } from "@mui/icons-material";
 import {
   Avatar,
   Box,
-  CircularProgress,
   Divider,
   IconButton,
   Rating,
@@ -12,6 +11,7 @@ import type { Review } from "../../apis/use-case/types";
 import { usePatientAuth } from "../../context/auth-context";
 import { useReviews } from "../../apis/use-case/doctor/review";
 import { formatDateTimeByLang, useTranslate } from "../../locales";
+import CommentListSkeleton from "../skeletons/comments";
 
 const CommentList = ({
   reviews,
@@ -34,11 +34,7 @@ const CommentList = ({
   };
 
   if (isPending) {
-    return (
-      <Box display="flex" justifyContent="center" my={4}>
-        <CircularProgress sx={{ color: "primary.darker" }} size={24} />
-      </Box>
-    );
+    return <CommentListSkeleton />;
   }
 
   if (isError || !reviews.length) {
@@ -75,6 +71,7 @@ const CommentList = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              flexWrap: "wrap",
               mb: 2,
             }}
           >
@@ -82,8 +79,8 @@ const CommentList = ({
               <Avatar
                 src={review.patient.photo}
                 sx={{
-                  width: 56,
-                  height: 56,
+                  width: { xs: 40, lg: 56 },
+                  height: { xs: 40, lg: 56 },
                   mr: 2,
                   backgroundColor: "primary.darker",
                   textTransform: "uppercase",
@@ -93,22 +90,40 @@ const CommentList = ({
                   .split(" ")[0]
                   .charAt(0)}${review.patient.name.split(" ")[1].charAt(0)}`}
               </Avatar>
-              <Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{
+                    textTransform: "capitalize",
+                    fontSize: { xs: "0.9rem", lg: "1rem" },
+                  }}
                 >
                   {review.patient.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: { xs: "0.7rem", lg: "0.8rem" } }}
+                  color="text.secondary"
+                >
                   {formatDateTimeByLang(review.createdAt)}
                 </Typography>
               </Box>
             </Box>
 
             <Box>
-              <Rating value={review.rating} precision={0.5} readOnly />
+              <Rating
+                value={review.rating}
+                precision={0.5}
+                readOnly
+                size="small"
+              />
               {user?._id === review.patient._id && (
                 <IconButton
                   onClick={() => handleDeleteReview(review._id)}

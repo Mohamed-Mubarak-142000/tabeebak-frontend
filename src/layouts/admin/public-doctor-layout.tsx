@@ -7,7 +7,7 @@ import { useTranslate } from "../../locales";
 const PublicDoctorLayout = () => {
   const { t } = useTranslate("common");
   return (
-    <Grid container sx={{ height: "100vh", overflow: "hidden" }}>
+    <Grid container sx={{ height: { md: "100vh" }, overflow: "hidden" }}>
       <Grid
         item
         xs={12}
@@ -16,6 +16,7 @@ const PublicDoctorLayout = () => {
           backgroundColor: (theme) => theme.palette.primary.darker,
           padding: 2,
           height: "100%",
+          display: { xs: "none", md: "flex" },
         }}
       >
         <FormHeader
@@ -48,7 +49,12 @@ const PublicDoctorLayout = () => {
           }}
         />
       </Grid>
-      <Grid item xs={12} md={8} sx={{ padding: 2, overflow: "auto" }}>
+      <Grid
+        item
+        xs={12}
+        md={8}
+        sx={{ padding: 2, overflow: "auto", height: "100%" }}
+      >
         <Box
           sx={{
             display: "flex",

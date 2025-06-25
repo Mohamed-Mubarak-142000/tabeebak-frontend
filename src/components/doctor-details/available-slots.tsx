@@ -1,21 +1,22 @@
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Iconify } from "../iconify";
-import type { AvailableSlot } from "../../apis/use-case/types";
 import { useTranslate } from "../../locales";
+import { useGetAvailableSlotsForPatient } from "../../apis/use-case/doctor/get-available-slots";
+import AvailableSlotsSkeleton from "../skeletons/available-slot";
 
-const AvailableSlotsDoctor = ({
-  data,
-  isPending,
-}: {
-  data: AvailableSlot[];
-  isPending: boolean;
-}) => {
+const AvailableSlotsDoctor = ({ id }: { id: string }) => {
   const { t } = useTranslate("appointment");
-  if (isPending) {
-    return <CircularProgress size={24} sx={{ color: "primary.darker" }} />;
+  const { data: availableSlots, isPending: isPendingAvailableSlots } =
+    useGetAvailableSlotsForPatient({
+      id: id || "",
+      showAll: false,
+    });
+
+  if (isPendingAvailableSlots) {
+    return <AvailableSlotsSkeleton />;
   }
 
-  if (!data || !data?.length) {
+  if (!availableSlots || !availableSlots?.slots?.length) {
     return (
       <Box sx={{ textAlign: "center", padding: 2 }}>
         <Typography variant="body1">{t("availableSlots.noSlots")}</Typography>
@@ -36,7 +37,7 @@ const AvailableSlotsDoctor = ({
         gap: 2,
       }}
     >
-      {data?.map((slot) => (
+      {availableSlots?.slots?.map((slot) => (
         <Stack
           spacing={1}
           alignItems={"center"}

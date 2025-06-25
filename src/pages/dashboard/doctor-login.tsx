@@ -35,7 +35,7 @@ const DoctorLogin = () => {
         <Typography
           variant="h3"
           sx={{
-            fontSize: { xs: "1.5rem", md: "2rem", lg: "2.5rem" },
+            fontSize: { xs: "1.5rem", md: "2.5rem", lg: "3rem" },
             fontWeight: (theme) => theme.typography.fontWeightBold,
           }}
         >
@@ -45,13 +45,13 @@ const DoctorLogin = () => {
         <AnimatedTitle
           sx={{
             color: "primary.darker",
-            fontSize: { xs: ".5rem", md: "1rem", lg: "1.5rem" },
-            fontWeight: (theme) => theme.typography.fontWeightBold,
+            fontSize: { xs: "1rem", md: "1.5rem", lg: "2rem" },
             lineHeight: 1.2,
           }}
           text={t("login_form.login_doctor.description")}
         />
       </Box>
+
       <Box sx={{ width: "100%" }}>
         <DoctorLoginForm />
 

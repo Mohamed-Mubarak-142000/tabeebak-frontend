@@ -15,8 +15,6 @@ const DoctorProfilePage = lazy(
   () => import("./pages/dashboard/doctor-profile-page")
 );
 const NotFoundPage = lazy(() => import("./pages/not-found-page"));
-const AppointmentsPage = lazy(() => import("./pages/appointments-page"));
-const AppointmentPage = lazy(() => import("./pages/appointment-page"));
 const PublicLayout = lazy(() => import("./layouts/patient/public-layout"));
 const PrivateLayout = lazy(() => import("./layouts/patient/private-layout"));
 const DashboardLayout = lazy(() => import("./layouts/admin/dashboard-layout"));
@@ -89,11 +87,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <PrivateLayout />,
-        children: [
-          { path: "profile", element: <PatientProfilePage /> },
-          { path: "appointments", element: <AppointmentsPage /> },
-          { path: "appointment/:docId", element: <AppointmentPage /> },
-        ],
+        children: [{ path: "profile", element: <PatientProfilePage /> }],
       },
     ],
   },

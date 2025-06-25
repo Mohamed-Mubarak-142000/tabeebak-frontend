@@ -89,9 +89,9 @@ const FloatingChatbot = () => {
           position: "fixed",
           bottom: 32,
           right: 32,
-          bgcolor: "#6200ee",
+          backgroundColor: (theme) => theme.palette.primary.dark,
           "&:hover": {
-            bgcolor: "#7c4dff",
+            backgroundColor: (theme) => theme.palette.primary.darker,
           },
         }}
       >
@@ -121,21 +121,23 @@ const FloatingChatbot = () => {
       >
         <DialogTitle
           sx={{
-            bgcolor: "#6200ee",
+            backgroundColor: (theme) => theme.palette.primary.dark,
             color: "white",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            p: 1.5,
           }}
         >
           <Box display="flex" alignItems="center">
             <SmartToyIcon sx={{ mr: 1 }} />
-            مساعد الدردشة
+            Chat Bot
           </Box>
           <IconButton onClick={handleClose} sx={{ color: "white" }}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
+
         <DialogContent
           sx={{
             p: 0,
@@ -149,8 +151,7 @@ const FloatingChatbot = () => {
             sx={{
               flexGrow: 1,
               overflowY: "auto",
-              p: 2,
-              bgcolor: "#f5f5f5",
+              backgroundColor: "background.default",
             }}
           >
             <List sx={{ width: "100%" }}>
@@ -167,7 +168,12 @@ const FloatingChatbot = () => {
                     {message.sender === "bot" && (
                       <ListItemAvatar sx={{ minWidth: "40px" }}>
                         <Avatar
-                          sx={{ bgcolor: "#6200ee", width: 32, height: 32 }}
+                          sx={{
+                            backgroundColor: (theme) =>
+                              theme.palette.primary.darker,
+                            width: 32,
+                            height: 32,
+                          }}
                         >
                           <SmartToyIcon fontSize="small" />
                         </Avatar>
@@ -178,7 +184,9 @@ const FloatingChatbot = () => {
                         p: 1.5,
                         maxWidth: "80%",
                         bgcolor:
-                          message.sender === "user" ? "#6200ee" : "white",
+                          message.sender === "user"
+                            ? (theme) => theme.palette.primary.main
+                            : (theme) => theme.palette.success.light,
                         color:
                           message.sender === "user" ? "white" : "text.primary",
                         borderRadius:
@@ -200,7 +208,11 @@ const FloatingChatbot = () => {
                     {message.sender === "user" && (
                       <ListItemAvatar sx={{ minWidth: "40px", ml: 1 }}>
                         <Avatar
-                          sx={{ bgcolor: "#ff5722", width: 32, height: 32 }}
+                          sx={{
+                            bgcolor: (theme) => theme.palette.warning.main,
+                            width: 32,
+                            height: 32,
+                          }}
                         >
                           <PersonIcon fontSize="small" />
                         </Avatar>

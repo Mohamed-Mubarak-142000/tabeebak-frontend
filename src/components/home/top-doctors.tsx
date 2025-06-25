@@ -1,19 +1,23 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import TitleSection from "../title-section";
 import DoctorItem from "./doctor-card";
 import { useTranslate } from "../../locales";
 import { useNavigate } from "react-router-dom";
 import { useGetAllDoctors } from "../../apis/use-case/doctor/get-all-doctors";
+import TopDoctorsSkeleton from "../skeletons/doctor-card-skeleton";
+import ButtonAction from "../button-action";
+import { ErrorStateContent } from "../error-state-content";
 
 const TopDoctors = () => {
   const { t } = useTranslate("home");
-  const { data } = useGetAllDoctors({
+  const { data, isPending, isError } = useGetAllDoctors({
     limit: 8,
   });
   const navigate = useNavigate();
   const navigateToShowAll = () => {
     navigate("/doctors");
   };
+
   return (
     <Stack spacing={5}>
       <TitleSection
@@ -30,12 +34,21 @@ const TopDoctors = () => {
           subTitle: {
             variant: "body1",
             sx: {
-              fontSize: { xs: ".5rem", md: ".75rem", lg: "1rem" },
+              textAlign: "center",
+              fontSize: { xs: ".8rem", md: "1rem", lg: "1.2rem" },
               fontWeight: (theme) => theme.typography.fontWeightRegular,
             },
           },
         }}
       />
+
+      {isError && (
+        <ErrorStateContent
+          icon="material-symbols:error-outline-rounded"
+          title="خطأ"
+          subtitle="حدث خطأ أثناء تحميل الموقع"
+        />
+      )}
 
       <Box
         sx={{
@@ -48,43 +61,50 @@ const TopDoctors = () => {
           gap: 2,
         }}
       >
-        {data?.data.map((item, index) => (
-          <DoctorItem doctor={item} key={index} />
-        ))}
+        {isPending ? (
+          <TopDoctorsSkeleton />
+        ) : (
+          data?.data.map((item, index) => (
+            <DoctorItem doctor={item} key={index} />
+          ))
+        )}
       </Box>
 
-      <Button
-        variant="contained"
-        size="large"
-        sx={{
-          mx: "auto",
-          mt: 5,
-          borderRadius: 3,
-          p: { xs: 1, md: 2, lg: 3 },
-          width: "fit-content",
-          backgroundColor: "primary.dark",
-          "&:hover": {
-            backgroundColor: "primary.main",
-            color: "common.white",
-            transition: (theme) =>
-              theme.transitions.create(["background-color", "color"], {
-                duration: theme.transitions.duration.shortest,
-              }),
+      <ButtonAction
+        title={t("top_doctors.view_all")}
+        onClick={navigateToShowAll}
+        slotProps={{
+          button: {
+            variant: "contained",
+            size: "large",
+            sx: {
+              mx: "auto",
+              mt: 5,
+              borderRadius: 3,
+              py: 1,
+              px: 3,
+              width: "fit-content",
+              backgroundColor: "primary.dark",
+              "&:hover": {
+                backgroundColor: "primary.main",
+                color: "common.white",
+                transition: (theme) =>
+                  theme.transitions.create(["background-color", "color"], {
+                    duration: theme.transitions.duration.shortest,
+                  }),
+              },
+            },
+          },
+          title: {
+            variant: "h3",
+            sx: {
+              fontSize: { xs: "0.8rem", md: ".75rem", lg: "1rem" },
+              fontWeight: (theme) => theme.typography.fontWeightBold,
+              color: "common.white",
+            },
           },
         }}
-        onClick={navigateToShowAll}
-      >
-        <Typography
-          variant="h3"
-          sx={{
-            fontSize: { xs: "0.8rem", md: ".75rem", lg: "1rem" },
-            fontWeight: (theme) => theme.typography.fontWeightBold,
-            color: "common.white",
-          }}
-        >
-          {t("top_doctors.view_all")}
-        </Typography>
-      </Button>
+      />
     </Stack>
   );
 };
